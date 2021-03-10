@@ -41,13 +41,13 @@ function RenderComments({ comments }) {
 
 
 function CampsiteInfo(props) {
-    const { campsite } = props;
+    const { campsite, comments } = props;
     if (campsite) {
         return (
             <div className="container">
                 <div className="row">
                     <RenderCampsite campsite={campsite} />
-                    <RenderComments comments={campsite.comments} />
+                    <RenderComments comments={comments} />
                 </div>
             </div>
         )

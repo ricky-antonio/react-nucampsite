@@ -23,11 +23,11 @@ class Main extends Component {
   }
 
   render() {
+
     const { campsites, comments, partners, promotions } = this.state;
 
     const HomePage = () => {
-      return (
-        
+      return ( 
         <Home
           campsite={campsites.filter(campsite => campsite.featured)[0]} 
           promotion={promotions.filter(promotion => promotion.featured)[0]} 
@@ -36,12 +36,22 @@ class Main extends Component {
       )
     }
 
+    const CampsiteWithId = ({match}) => {
+      return (
+        <CampsiteInfo 
+          campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]}
+          comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId )}
+        />
+      );
+    }
+
     return (
       <div >
         <Header />
         <Switch>
           <Route path='/home' component={HomePage} />
           <Route exact path='/directory' render={() => <Directory campsites={this.state.campsites} />} />
+          <Route path='/directory/:campsiteId' component={CampsiteWithId} />
           <Route exact path='/contactus' component={Contact} />
           <Redirect to='/home' />
         </Switch>

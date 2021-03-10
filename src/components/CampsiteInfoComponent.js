@@ -26,7 +26,7 @@ class CampsiteInfo extends Component {
                         return (
                             <div className="mb-2">
                                 <div>{comment.text}</div>
-                                <div>-- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'})
+                                <div>-- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
                                     .format(new Date(Date.parse(comment.date)))}</div>
                             </div>
                         )
@@ -43,9 +43,11 @@ class CampsiteInfo extends Component {
         const { campsite } = this.props;
         if (campsite) {
             return (
-                <div className="row">
-                    {this.renderCampsite(campsite)}
-                    {this.renderComments(campsite.comments)}
+                <div className="container">
+                    <div className="row">
+                        {this.renderCampsite(campsite)}
+                        {this.renderComments(campsite.comments)}
+                    </div>
                 </div>
             )
         }

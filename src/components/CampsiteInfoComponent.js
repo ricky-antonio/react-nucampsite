@@ -18,13 +18,14 @@ function RenderCampsite({ campsite }) {
 }
 
 function RenderComments({ comments }) {
+    console.log(comments)
     if (comments) {
         return (
             <div className="col-md-5 m-4">
                 <h4>Comments</h4>
                 {comments.map(comment => {
                     return (
-                        <div className="mb-2">
+                        <div className="mb-2" key={comment.id}>
                             <div>{comment.text}</div>
                             <div>-- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
                                 .format(new Date(Date.parse(comment.date)))}</div>

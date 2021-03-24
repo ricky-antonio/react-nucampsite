@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Button, Label, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = val => val;
 const maxLength = len => val => !val || (val.length <= len);
@@ -61,7 +62,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text );
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
     }
 
     render() {
@@ -78,66 +79,66 @@ class CommentForm extends Component {
                             <div className="form-group">
                                 <Label htmlFor="rating" >rating</Label>
                                 <Control.select
-                                        model=".rating"
-                                        id="rating"
-                                        name="rating"
-                                        className="form-control"
-                                        validators={{
-                                            required
-                                        }}
-                                    >
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Control.select>
-                                    <Errors
-                                        className="text-danger"
-                                        model=".rating"
-                                        show="touched"
-                                        component="div"
-                                        messages={{
-                                            required: 'Required'
-                                        }}
-                                    />
+                                    model=".rating"
+                                    id="rating"
+                                    name="rating"
+                                    className="form-control"
+                                    validators={{
+                                        required
+                                    }}
+                                >
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </Control.select>
+                                <Errors
+                                    className="text-danger"
+                                    model=".rating"
+                                    show="touched"
+                                    component="div"
+                                    messages={{
+                                        required: 'Required'
+                                    }}
+                                />
                             </div>
                             <div className="form-group">
                                 <Label htmlFor="author" >Your Name</Label>
                                 <Control.text
-                                        model=".author"
-                                        id="author"
-                                        name="author"
-                                        placeholder="Your Name"
-                                        className="form-control"
-                                        validators={{
-                                            required,
-                                            minLength: minLength(2),
-                                            maxLength: maxLength(15)
-                                        }}
-                                    />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".author"
-                                        show="touched"
-                                        component="div"
-                                        messages={{
-                                            required: 'Required',
-                                            minLength: 'Must be at least 2 characters',
-                                            maxLength: 'Mist be 15 characters or less'
-                                        }}
-                                    />
-                                
+                                    model=".author"
+                                    id="author"
+                                    name="author"
+                                    placeholder="Your Name"
+                                    className="form-control"
+                                    validators={{
+                                        required,
+                                        minLength: minLength(2),
+                                        maxLength: maxLength(15)
+                                    }}
+                                />
+                                <Errors
+                                    className="text-danger"
+                                    model=".author"
+                                    show="touched"
+                                    component="div"
+                                    messages={{
+                                        required: 'Required',
+                                        minLength: 'Must be at least 2 characters',
+                                        maxLength: 'Mist be 15 characters or less'
+                                    }}
+                                />
+
                             </div>
                             <div className="form-group">
                                 <Label htmlFor="text" >Comment</Label>
                                 <Control.textarea
-                                        model=".text"
-                                        id="text"
-                                        name="text"
-                                        rows="6"
-                                        className="form-control"
-                                    />
+                                    model=".text"
+                                    id="text"
+                                    name="text"
+                                    rows="6"
+                                    className="form-control"
+                                />
                             </div>
                             <Button type="submit" value="submit" color="primary" >Submit</Button>
 
@@ -153,7 +154,28 @@ class CommentForm extends Component {
 
 
 function CampsiteInfo(props) {
-    const { campsite, comments } = props;
+    const { campsite, comments, isLoading, errMess } = props;
+
+    if (isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    };
+
+    if (errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{errMess}</h4>
+                </div>
+            </div>
+        );
+    };
+
     if (campsite) {
         return (
             <div className="container">
@@ -170,9 +192,9 @@ function CampsiteInfo(props) {
                 </div>
                 <div className="row">
                     <RenderCampsite campsite={campsite} />
-                    <RenderComments 
+                    <RenderComments
                         comments={comments}
-                        addComment={props.addComment} 
+                        addComment={props.addComment}
                         campsiteId={props.campsite.id}
                     />
 

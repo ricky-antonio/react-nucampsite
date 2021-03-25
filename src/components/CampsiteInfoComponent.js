@@ -22,7 +22,7 @@ function RenderCampsite({ campsite }) {
     )
 }
 
-function RenderComments({ comments, addComment, campsiteId }) {
+function RenderComments({ comments, postComment, campsiteId }) {
     console.log(comments)
     if (comments) {
         return (
@@ -38,7 +38,7 @@ function RenderComments({ comments, addComment, campsiteId }) {
                     )
                 })
                 }
-                <CommentForm campsiteId={campsiteId} addComment={addComment} />
+                <CommentForm campsiteId={campsiteId} postComment={postComment} />
             </div>
         )
     }
@@ -63,7 +63,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+        this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
     }
 
     render() {
@@ -195,7 +195,7 @@ function CampsiteInfo(props) {
                     <RenderCampsite campsite={campsite} />
                     <RenderComments
                         comments={comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         campsiteId={props.campsite.id}
                     />
 
